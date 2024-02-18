@@ -13,33 +13,81 @@ return require('packer').startup(function(use)
 
         requires = { { 'nvim-lua/plenary.nvim' } }
     }
+    use {
+        "EdenEast/nightfox.nvim",
+        config = function()
+            require("nightfox").setup({
+
+                options = {
+                    transparent = true
+                }
+            })
+            vim.cmd("colorscheme carbonfox") -- Or any Aura theme available
+        end
+    }
 
     use({
-        'rose-pine/neovim',
-        as = 'rose-pine',
+        'ThePrimeagen/harpoon',
+        branch = "harpoon2",
+        requires = { { "nvim-lua/plenary.nvim" } },
         config = function()
-            vim.cmd('colorscheme rose-pine')
+            require("harpoon").setup()
         end
     })
-
 
     use({
         "folke/trouble.nvim",
         config = function()
             require("trouble").setup {
-                icons = false,
-                -- your configuration comes here
-                -- or leave it empty to use the default settings
-                -- refer to the configuration section below
+                icons = true,
             }
         end
     })
 
+
+    use {
+        'nvim-tree/nvim-web-devicons',
+        config = function()
+            require('nvim-web-devicons').setup {
+                default = true,
+
+                color_icons = true,
+                struct = true,
+            }
+        end
+    }
+
+    use {
+        "nvim-tree/nvim-tree.lua",
+        config = function()
+            require("nvim-tree").setup()
+        end
+    }
+
+    use {
+        'nvim-lualine/lualine.nvim',
+        requires = { 'nvim-tree/nvim-web-devicons', opt = true },
+        config = function()
+            require("lualine").setup({
+                options = {
+                    theme = "carbonfox",
+                    icons_enabled = true,
+                }
+            })
+        end
+    }
+
+    use 'eandrju/cellular-automaton.nvim'
     use('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
     use('nvim-treesitter/playground')
-    use('ThePrimeagen/harpoon')
     use('mbbill/undotree')
     use('tpope/vim-fugitive')
+    use {
+        'numToStr/Comment.nvim',
+        config = function()
+            require('Comment').setup()
+        end
+    }
 
     use {
         'VonHeikemen/lsp-zero.nvim',
